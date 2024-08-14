@@ -1,20 +1,22 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import trips from "./db.js";
 
 function MainPage() {
   const [searchTrip, setSearchTrip] = useState("");
   const [tripsData, setTripsData] = useState([]);
-  const getTravelTrips = async () => {
-    const respond = await axios.get(
-      `https://react-tourist-attraction-mini-project-minniemouse034-24sv/trips?keywords=${searchTrip}`
-    );
-    console.log(respond.data.data);
-    setTripsData(respond.data.data);
-  };
+  // const getTravelTrips = async () => {
+  //   const respond = await axios.get(
+  //     `http://localhost:4001/trips?keywords=${searchTrip}`
+  //   );
+  //   console.log(respond.data.data);
+  //   setTripsData(respond.data.data);
+  // };
 
   useEffect(() => {
-    getTravelTrips();
+    // getTravelTrips();
+    setTripsData(trips);
   }, [searchTrip]);
 
   const textLimit100 = (text) => {
