@@ -7,8 +7,7 @@ function MainPage() {
   const [tripsData, setTripsData] = useState([]);
   const getTravelTrips = async () => {
     const respond = await axios.get(
-      /*  `https://teawnaidee-techup.up.railway.app/trips?keywords=${searchTrip}` */
-      `http://localhost:4001/trips?keywords=${searchTrip}`
+      `https://react-tourist-attraction-mini-project-minniemouse034-24sv/trips?keywords=${searchTrip}`
     );
     console.log(respond.data.data);
     setTripsData(respond.data.data);
