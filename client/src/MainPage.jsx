@@ -16,7 +16,17 @@ function MainPage() {
 
   useEffect(() => {
     // getTravelTrips();
-    setTripsData(trips);
+    const searchTerms = searchTrip.split(" ");
+    console.log(searchTerms);
+    setTripsData(
+      trips.filter((trip) =>
+        searchTerms.every(
+          (term) =>
+            trip.title.includes(term) ||
+            trip.tags.some((tag) => tag.includes(term))
+        )
+      )
+    );
   }, [searchTrip]);
 
   const textLimit100 = (text) => {
@@ -36,7 +46,7 @@ function MainPage() {
   };
 
   return (
-    <div className="w-full h-full p-10">
+    <div className="min-h-screen min-w-screen pt-10 md:p-10 bg-[url('/bg.jpg')] bg-cover ">
       <h1 id="font-1" className="text-6xl font-bold text-sky-500 text-center">
         เที่ยวไหนดี
       </h1>
@@ -54,20 +64,27 @@ function MainPage() {
           }}
         />
       </div>
-      <section className=" flex-col  columns-1 xl:columns-2  ">
+      <section className=" grid grid-cols-1  md:grid-cols-2 gap-5 ">
         {tripsData.map((item) => {
           return (
             <div
-              className="grid-cols-1 pb-5 flex justify-center rounded-xl overflow-hidden  "
+              className="flex justify-center rounded-xl overflow-hidden shadow-lg "
               key={item.uid}
             >
-              <div className="flex p-3 gap-5 rounded-xl bg-white container max-md:flex-col">
+              <div className="relative xxl:flex p-3 rounded-xl bg-white container max-md:flex-col">
                 <img
-                  className="rounded-3xl  container w-96 h-48 object-cover m-4 "
+                  className=" rounded-3xl w-full md:w-1/2 h-48 object-cover p-4"
                   src={item.photos[0]}
                   alt=" travel image"
                   key={item.img}
                 ></img>
+                <button
+                  id="copyBtn"
+                  className=" bg-blue-500 absolute bottom-5 right-5 md:top-5 md:right-5 text-xs text-white  w-10 h-10 rounded-full flex-row "
+                  onClick={() => copyClipboard(item.url)}
+                >
+                  Copy
+                </button>
                 <div>
                   <button
                     onClick={() => {
@@ -116,23 +133,14 @@ function MainPage() {
                       if (index !== 0) {
                         return (
                           <img
-                            className=" rounded-3xl bg-slate-50 inline p-1"
+                            className=" rounded-3xl bg-slate-50 inline p-1 w-30 h-24 object-cover"
                             src={photos}
                             alt="travel image"
-                            width="150"
-                            height="200"
                             key={index}
                           ></img>
                         );
                       }
                     })}
-                    <button
-                      id="copyBtn"
-                      className=" bg-blue-500  text-xs text-white  w-10 h-10 rounded-full flex-row  left-20"
-                      onClick={() => copyClipboard(item.url)}
-                    >
-                      Copy
-                    </button>
                   </div>
                 </div>
               </div>
